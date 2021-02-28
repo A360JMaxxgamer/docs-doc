@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service UploadService {
+	rpc Upload(stream UploadRequest) returns (UploadComplete);
+}
+
+message UploadRequest {
+	string fileName = 1;
+	repeated bytes data = 2;
+}
+
+message UploadComplete {
+	bool success = 1;
+}
