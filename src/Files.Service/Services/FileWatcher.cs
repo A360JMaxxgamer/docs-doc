@@ -45,7 +45,17 @@ namespace DocsDoc.Files.Service.Services
         {
             while (await _analyzeChannel.Reader.WaitToReadAsync())
                 while (_analyzeChannel.Reader.TryRead(out var path))
-                    await Analyze(path);
+                {
+                    try
+                    {
+                        await Analyze(path);
+
+                    }
+                    catch (System.Exception e)
+                    {
+                        _logger.LogError(e, $"An error occured during the analysis of {path}");
+                    }
+                }
         }
 
         private async Task Analyze(string path) 
