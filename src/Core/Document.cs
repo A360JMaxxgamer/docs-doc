@@ -2,7 +2,7 @@ using System;
 
 namespace DocsDoc
 {
-    public class Document : IDocument
+    public class Document
     {
         public string Id { get; set; }
 

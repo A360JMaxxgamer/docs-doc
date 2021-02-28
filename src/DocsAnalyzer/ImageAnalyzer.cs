@@ -16,7 +16,7 @@ namespace DocsDoc.DocsAnalyzer
             _tesseractEngine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default);
         }
 
-        public Task<IDocument> Analyze(string imagePath)
+        public Task<Document> Analyze(string imagePath)
         {
             if (!File.Exists(imagePath))
             {
@@ -31,7 +31,7 @@ namespace DocsDoc.DocsAnalyzer
             {
                 Text = text
             };
-            return Task.FromResult<IDocument>(doc);
+            return Task.FromResult(doc);
         }
 
         public void Dispose()
