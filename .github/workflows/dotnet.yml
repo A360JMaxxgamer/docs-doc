@@ -17,6 +17,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+        
+    - name: Install xmllint
+      run: sudo apt install libleptonica-dev \
+          ln -s /usr/lib/x86_64-linux-gnu/liblept.so.5 liblept.so.5 \
+          ln -s /usr/lib/x86_64-linux-gnu/liblept.so.5 libleptonica-1.78.0.so \
+          sudo apt install libtesseract-dev \
+          ln -s /usr/lib/x86_64-linux-gnu/libtesseract.so.4.0.1 libtesseract41.so
     - name: Restore dependencies
       run: dotnet restore ./src/DocsDoc.sln
     - name: Build
