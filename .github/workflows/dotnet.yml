@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore /src/DocsDoc.sln
+      run: dotnet restore ./src/DocsDoc.sln
     - name: Build
-      run: dotnet build /src/DocsDoc.sln --no-restore
+      run: dotnet build ./src/DocsDoc.sln --no-restore
     - name: Test
-      run: dotnet test /src/DocsDoc.sln --no-build --verbosity normal
+      run: dotnet test ./src/DocsDoc.sln --no-build --verbosity normal
