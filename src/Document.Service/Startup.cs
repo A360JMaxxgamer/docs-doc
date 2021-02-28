@@ -1,4 +1,5 @@
 using DocsDoc.Docmuent.Service.GraphQl;
+using DocsDoc.Docmuent.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ namespace DocsDoc.Docmuent.Service
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IDocumentService, ElasticDocumentService>();
+
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()

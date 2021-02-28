@@ -7,7 +7,7 @@ namespace DocsDoc.Docmuent.Service.Services
     {
         IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments);
 
-        IQueryable<Document> GetDocuments();
+        IEnumerable<Document> GetDocuments(string query);
 
         void DeleteDocuments(IEnumerable<string> ids);
     }
