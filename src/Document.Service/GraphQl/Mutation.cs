@@ -1,10 +1,10 @@
-﻿using DocsDoc.Docmuent.Service.Services;
+﻿using DocsDoc.Documents.Service.Services;
 using HotChocolate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DocsDoc.Docmuent.Service.GraphQl
+namespace DocsDoc.Documents.Service.GraphQl
 {
     public class Mutation
     {

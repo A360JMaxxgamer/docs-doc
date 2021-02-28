@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DocsDoc.Docmuent.Service.Services
+namespace DocsDoc.Documents.Service.Services
 {
     public interface IDocumentService
     {

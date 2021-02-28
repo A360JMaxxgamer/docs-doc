@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DocsDoc.Docmuent.Service": {
+    "DocsDoc.Documents.Service": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "graphql",

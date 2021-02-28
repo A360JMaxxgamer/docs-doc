@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DocsDoc.Docmuent.Service
+namespace DocsDoc.Documents.Service
 {
     public class Program
     {

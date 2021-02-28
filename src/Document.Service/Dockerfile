@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Document.Service/DocsDoc.Docmuent.Service/DocsDoc.Docmuent.Service.csproj", "Document.Service/DocsDoc.Docmuent.Service/"]
-RUN dotnet restore "Document.Service/DocsDoc.Docmuent.Service/DocsDoc.Docmuent.Service.csproj"
+COPY ["Document.Service/DocsDoc.Documents.Service/DocsDoc.Documents.Service.csproj", "Document.Service/DocsDoc.Documents.Service/"]
+RUN dotnet restore "Document.Service/DocsDoc.Documents.Service/DocsDoc.Documents.Service.csproj"
 COPY . .
-WORKDIR "/src/Document.Service/DocsDoc.Docmuent.Service"
-RUN dotnet build "DocsDoc.Docmuent.Service.csproj" -c Release -o /app/build
+WORKDIR "/src/Document.Service/DocsDoc.Documents.Service"
+RUN dotnet build "DocsDoc.Documents.Service.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "DocsDoc.Docmuent.Service.csproj" -c Release -o /app/publish
+RUN dotnet publish "DocsDoc.Documents.Service.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DocsDoc.Docmuent.Service.dll"]
+ENTRYPOINT ["dotnet", "DocsDoc.Documents.Service.dll"]

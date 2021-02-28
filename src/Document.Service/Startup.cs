@@ -1,11 +1,11 @@
-using DocsDoc.Docmuent.Service.GraphQl;
-using DocsDoc.Docmuent.Service.Services;
+using DocsDoc.Documents.Service.GraphQl;
+using DocsDoc.Documents.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DocsDoc.Docmuent.Service
+namespace DocsDoc.Documents.Service
 {
     public class Startup
     {
