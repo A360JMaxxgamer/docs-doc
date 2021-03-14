@@ -7,11 +7,11 @@ namespace DocsDoc.Documents.Service.Services
 {
     internal class ElasticDocumentService : IDocumentService
     {
-        private readonly ElasticClient _elastic;
+        private readonly IElasticClient _elastic;
 
-        public ElasticDocumentService(IConnectionSettingsValues elasticConnectionSettingsValues)
+        public ElasticDocumentService(IElasticClient elasticClient)
         {
-            _elastic = new ElasticClient(elasticConnectionSettingsValues);
+            _elastic = elasticClient;
         }
 
         public IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments)
