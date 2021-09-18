@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.Core", "Core\DocsDo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.DocsAnalyzer", "DocsAnalyzer\DocsDoc.DocsAnalyzer.csproj", "{E9024638-3143-401B-BD56-54F65668E705}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.DocsAnayzer.Test", "DocsAnayzer.Test\DocsDoc.DocsAnayzer.Test.csproj", "{880B5FA6-4E61-4D3B-873E-3D49835004F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.DocsAnalyzer.Test", "DocsAnayzer.Test\DocsDoc.DocsAnalyzer.Test.csproj", "{880B5FA6-4E61-4D3B-873E-3D49835004F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.Documents.Service", "Document.Service\DocsDoc.Documents.Service.csproj", "{5E0927A8-2698-4DBF-A0B7-AB0483FD2979}"
 EndProject

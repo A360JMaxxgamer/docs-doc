@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DocsDoc.Core;
 using Tesseract;
 
-[assembly: InternalsVisibleTo("DocsDoc.DocsAnayzer.Test")]
+[assembly: InternalsVisibleTo("DocsDoc.DocsAnalyzer.Test")]
 
 namespace DocsDoc.DocsAnalyzer
 {
