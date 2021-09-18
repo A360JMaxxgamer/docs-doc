@@ -2,9 +2,11 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using DocsDoc.Core;
 using Tesseract;
 
 [assembly: InternalsVisibleTo("DocsDoc.DocsAnayzer.Test")]
+
 namespace DocsDoc.DocsAnalyzer
 {
     internal class ImageAnalyzer : IImageAnalyzer, IDisposable
@@ -16,12 +18,14 @@ namespace DocsDoc.DocsAnalyzer
             _tesseractEngine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default);
         }
 
+        public void Dispose()
+        {
+            _tesseractEngine.Dispose();
+        }
+
         public Task<Document> Analyze(string imagePath)
         {
-            if (!File.Exists(imagePath))
-            {
-                throw new FileNotFoundException($"Image {imagePath} cannot be found.");
-            }
+            if (!File.Exists(imagePath)) throw new FileNotFoundException($"Image {imagePath} cannot be found.");
 
             using var img = Pix.LoadFromFile(imagePath);
             using var page = _tesseractEngine.Process(img);
@@ -32,11 +36,6 @@ namespace DocsDoc.DocsAnalyzer
                 Text = text
             };
             return Task.FromResult(doc);
-        }
-
-        public void Dispose()
-        {
-            _tesseractEngine.Dispose();
         }
     }
 }

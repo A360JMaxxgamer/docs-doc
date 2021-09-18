@@ -1,28 +1,29 @@
-﻿using DocsDoc.DocsAnalyzer;
-using DocsDoc.Files.Service.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using System;
 using System.IO;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using DocsDoc.DocsAnalyzer;
+using DocsDoc.Files.Service.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace DocsDoc.Files.Service.Services
 {
     public class FileWatcher
     {
-        private readonly FileSystemWatcher _fileWatcher;
-        private readonly IImageAnalyzer _imageAnalyzer;
-        private readonly IFileDocumentService _fileDocumentService;
-        private readonly ILogger<FileWatcher> _logger;
         private readonly Channel<string> _analyzeChannel;
+        private readonly IFileDocumentService _fileDocumentService;
+        private readonly IImageAnalyzer _imageAnalyzer;
+        private readonly ILogger<FileWatcher> _logger;
         private readonly DirectoryInfo _storageDirectory;
 
-        public FileWatcher(FolderConfiguration folderConfiguration, IImageAnalyzer imageAnalyzer, IFileDocumentService fileDocumentService, ILogger<FileWatcher> logger)
+        public FileWatcher(FolderConfiguration folderConfiguration, IImageAnalyzer imageAnalyzer,
+            IFileDocumentService fileDocumentService, ILogger<FileWatcher> logger)
         {
             _storageDirectory = new DirectoryInfo(folderConfiguration.StorageFolder);
 
-            _fileWatcher = new FileSystemWatcher(folderConfiguration.WorkFolder);
-            _fileWatcher.Created += OnFileCreated;
-            _fileWatcher.EnableRaisingEvents = true;
+            var fileWatcher = new FileSystemWatcher(folderConfiguration.WorkFolder);
+            fileWatcher.Created += OnFileCreated;
+            fileWatcher.EnableRaisingEvents = true;
             _imageAnalyzer = imageAnalyzer;
             _fileDocumentService = fileDocumentService;
             _logger = logger;
@@ -44,21 +45,18 @@ namespace DocsDoc.Files.Service.Services
         private async Task HandleNewFiles()
         {
             while (await _analyzeChannel.Reader.WaitToReadAsync())
-                while (_analyzeChannel.Reader.TryRead(out var path))
+            while (_analyzeChannel.Reader.TryRead(out var path))
+                try
                 {
-                    try
-                    {
-                        await Analyze(path);
-
-                    }
-                    catch (System.Exception e)
-                    {
-                        _logger.LogError(e, $"An error occured during the analysis of {path}");
-                    }
+                    await Analyze(path);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, $"An error occured during the analysis of {path}");
                 }
         }
 
-        private async Task Analyze(string path) 
+        private async Task Analyze(string path)
         {
             var fileInfo = new FileInfo(path);
             _logger.LogInformation($"Start analysis of file: {fileInfo.Name}");

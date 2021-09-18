@@ -5,9 +5,9 @@ namespace DocsDoc.Documents.Service.Services
 {
     public interface IDocumentService
     {
-        IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments);
+        IQueryable<Core.Document> AddDocuments(IEnumerable<Core.Document> newDocuments);
 
-        IEnumerable<Document> GetDocuments(string query);
+        IEnumerable<Core.Document> GetDocuments(string query);
 
         void DeleteDocuments(IEnumerable<string> ids);
     }

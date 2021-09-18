@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DocsDoc.Core;
 
 namespace DocsDoc.Files.Service.Services
 {

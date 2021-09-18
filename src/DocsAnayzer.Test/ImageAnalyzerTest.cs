@@ -1,14 +1,14 @@
-﻿using DocsDoc.DocsAnalyzer;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
+using DocsDoc.DocsAnalyzer;
 using Xunit;
 
 namespace DocsDoc.DocsAnayzer.Test
 {
     public class ImageAnalyzerTest
     {
-        private readonly FileInfo _exampleLetter = new FileInfo(@"./Resources/example-letter.png");
         private readonly IImageAnalyzer _anaylyzer = new ImageAnalyzer();
+        private readonly FileInfo _exampleLetter = new(@"./Resources/example-letter.png");
 
         [Fact]
         public async Task Find_any_text()

@@ -1,10 +1,12 @@
-﻿using DocsDoc.DocsAnalyzer;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace DocsDoc
+namespace DocsDoc.DocsAnalyzer
 {
     public static class AnalyzerServiceCollectionExtension
     {
-        public static IServiceCollection AddImageAnalyzers(this IServiceCollection services) => services.AddTransient<IImageAnalyzer, ImageAnalyzer>();
+        public static IServiceCollection AddImageAnalyzers(this IServiceCollection services)
+        {
+            return services.AddTransient<IImageAnalyzer, ImageAnalyzer>();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using DocsDoc.Documents.Service.GraphQl;
 using DocsDoc.Documents.Service.Services;
 using Microsoft.AspNetCore.Builder;
@@ -6,13 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nest;
-using System;
 
 namespace DocsDoc.Documents.Service
 {
     public class Startup
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
@@ -30,29 +30,23 @@ namespace DocsDoc.Documents.Service
                 .AddSorting();
 
             services
-              .AddTransient<IElasticClient>(ctx =>
-              {
-                  var node = new Uri(_configuration.GetValue<string>("ElasticEndpoint"));
-                  var settings = new ConnectionSettings(node)
-                      .DefaultIndex("docs");
-                  return new ElasticClient(settings);
-              });
+                .AddTransient<IElasticClient>(_ =>
+                {
+                    var node = new Uri(_configuration.GetValue<string>("ElasticEndpoint"));
+                    var settings = new ConnectionSettings(node)
+                        .DefaultIndex("docs");
+                    return new ElasticClient(settings);
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseWebSockets();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGraphQL();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
         }
     }
 }

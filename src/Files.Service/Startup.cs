@@ -1,3 +1,4 @@
+using DocsDoc.DocsAnalyzer;
 using DocsDoc.Files.Service.Configuration;
 using DocsDoc.Files.Service.Services;
 using Microsoft.AspNetCore.Builder;
@@ -10,35 +11,34 @@ namespace DocsDoc.Files.Service
 {
     public class Startup
     {
-        private IConfigurationRoot ConfigRoot;
+        private readonly IConfigurationRoot _configuration;
 
         public Startup(IConfiguration configRoot)
         {
-            ConfigRoot = (IConfigurationRoot)configRoot;
+            _configuration = (IConfigurationRoot) configRoot;
         }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient(ctx => ConfigRoot.GetValue<FolderConfiguration>("FolderConfig"));
+            services.AddTransient(_ => _configuration.GetValue<FolderConfiguration>("FolderConfig"));
 
             services.AddImageAnalyzers();
+            services.AddGrpc();
+
+            services.AddHttpClient("DocumentClient",
+                client => { client.BaseAddress = _configuration.GetServiceUri("backend"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGrpcService<FileService>();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapGrpcService<FileService>(); });
         }
     }
 }
