@@ -9,7 +9,7 @@ namespace DocsDoc.Documents.Service.GraphQl
     {
         public IEnumerable<Document> GetDocuments([Service] IDocumentService documentService, string query)
         {
-            return documentService.GetDocuments(query);
+            return documentService.GetDocumentsByText(query);
         }
     }
 }

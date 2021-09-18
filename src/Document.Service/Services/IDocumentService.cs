@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DocsDoc.Core;
 
 namespace DocsDoc.Documents.Service.Services
 {
     public interface IDocumentService
     {
-        IQueryable<Core.Document> AddDocuments(IEnumerable<Core.Document> newDocuments);
+        IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments);
 
-        IEnumerable<Core.Document> GetDocuments(string query);
+        IEnumerable<Document> GetDocumentsByText(string query);
 
         void DeleteDocuments(IEnumerable<string> ids);
     }

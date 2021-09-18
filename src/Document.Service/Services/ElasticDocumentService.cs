@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using DocsDoc.Core;
 using Nest;
 
 namespace DocsDoc.Documents.Service.Services
@@ -14,22 +14,30 @@ namespace DocsDoc.Documents.Service.Services
             _elastic = elasticClient;
         }
 
-        public IQueryable<Core.Document> AddDocuments(IEnumerable<Core.Document> newDocuments)
+        public IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments)
         {
             var response = _elastic.Bulk(desc => desc.CreateMany(newDocuments));
             return response.Items
                 .AsQueryable()
-                .Select(item => item.GetResponse<Core.Document>().Source);
+                .Select(item => item.GetResponse<Document>().Source);
         }
 
         public void DeleteDocuments(IEnumerable<string> ids)
         {
-            throw new NotImplementedException();
+            _elastic.DeleteByQuery<Document>(search => search
+                .Query(query => query
+                    .Ids(i => i.Values(ids))));
         }
 
-        public IEnumerable<Core.Document> GetDocuments(string query)
+        public IEnumerable<Document> GetDocumentsByText(string queryText)
         {
-            throw new NotImplementedException();
+            return _elastic
+                .Search<Document>(search => search
+                    .Query(query => query
+                        .Match(match => match
+                            .Field(field => field.Text)
+                            .Query(queryText))))
+                .Documents;
         }
     }
 }
