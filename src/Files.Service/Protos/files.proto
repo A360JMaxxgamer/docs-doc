@@ -5,8 +5,7 @@ service UploadService {
 }
 
 message UploadRequest {
-	string fileName = 1;
-	repeated bytes data = 2;
+	repeated bytes data = 1;
 }
 
 message UploadComplete {

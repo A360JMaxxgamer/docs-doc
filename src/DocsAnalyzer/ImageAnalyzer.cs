@@ -23,19 +23,15 @@ namespace DocsDoc.DocsAnalyzer
             _tesseractEngine.Dispose();
         }
 
-        public Task<Document> Analyze(string imagePath)
+        public Task<string> Analyze(string imagePath)
         {
             if (!File.Exists(imagePath)) throw new FileNotFoundException($"Image {imagePath} cannot be found.");
 
             using var img = Pix.LoadFromFile(imagePath);
             using var page = _tesseractEngine.Process(img);
             var text = page.GetText();
-
-            var doc = new Document
-            {
-                Text = text
-            };
-            return Task.FromResult(doc);
+            
+            return Task.FromResult(text);
         }
     }
 }

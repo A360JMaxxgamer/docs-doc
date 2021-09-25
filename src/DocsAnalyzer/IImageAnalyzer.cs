@@ -5,6 +5,6 @@ namespace DocsDoc.DocsAnalyzer
 {
     public interface IImageAnalyzer
     {
-        Task<Document> Analyze(string imagePath);
+        Task<string> Analyze(string imagePath);
     }
 }

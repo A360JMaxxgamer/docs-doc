@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using DocsDoc.Core;
+using DocsDoc.Files.Service.GraphQl;
 
 namespace DocsDoc.Files.Service.Services
 {
     public interface IFileDocumentService
     {
-        Task<Document> SaveDocument(Document document);
+        Task<IDocumentBase> SaveDocument(string documentContent);
     }
 }

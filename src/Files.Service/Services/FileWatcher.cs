@@ -63,7 +63,7 @@ namespace DocsDoc.Files.Service.Services
             var document = await _imageAnalyzer.Analyze(fileInfo.FullName);
             _logger.LogInformation($"Save document: {fileInfo.Name}");
             var savedDocument = await _fileDocumentService.SaveDocument(document);
-            _logger.LogInformation($"Create file for document: {savedDocument.Id}");
+            _logger.LogInformation($"Create file for document: {savedDocument.Id.Value}");
             var outputName = Path.Combine(_storageDirectory.FullName, $"{savedDocument.Id}");
             File.Copy(path, outputName);
             _logger.LogInformation($"Delete input file: {fileInfo.Name}");

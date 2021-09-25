@@ -6,7 +6,7 @@ namespace DocsDoc.Documents.Service.Services
 {
     public interface IDocumentService
     {
-        IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments);
+        IQueryable<Document> AddDocuments(IEnumerable<string> newDocuments);
 
         IEnumerable<Document> GetDocumentsByText(string query);
 

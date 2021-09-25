@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DocsDoc.Core;
 using Nest;
@@ -14,9 +15,15 @@ namespace DocsDoc.Documents.Service.Services
             _elastic = elasticClient;
         }
 
-        public IQueryable<Document> AddDocuments(IEnumerable<Document> newDocuments)
+        public IQueryable<Document> AddDocuments(IEnumerable<string> newDocuments)
         {
-            var response = _elastic.Bulk(desc => desc.CreateMany(newDocuments));
+            var response = _elastic.Bulk(desc => desc.CreateMany(newDocuments.Select(text => new Document
+            {
+                Id = Guid.NewGuid(),
+                Text = text,
+                CreationDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow
+            })));
             return response.Items
                 .AsQueryable()
                 .Select(item => item.GetResponse<Document>().Source);

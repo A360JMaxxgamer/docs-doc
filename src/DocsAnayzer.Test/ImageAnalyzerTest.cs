@@ -12,10 +12,9 @@ namespace DocsDoc.DocsAnalyzer.Test
         [Fact]
         public async Task Find_any_text()
         {
-            var doc = await _analyzer.Analyze(_exampleLetter.FullName);
-
-            Assert.NotNull(doc);
-            Assert.NotNull(doc.Text);
+            var content = await _analyzer.Analyze(_exampleLetter.FullName);
+            
+            Assert.NotNull(content);
         }
 
         [Fact]

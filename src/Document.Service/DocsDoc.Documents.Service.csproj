@@ -2,15 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>net5</TargetFramework>
-        <UserSecretsId>16e88c9e-8a8c-4258-8778-772bac2d96d8</UserSecretsId>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <DockerfileContext>..\..</DockerfileContext>
         <RootNamespace>DocsDoc.Documents.Service</RootNamespace>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.9"/>
-        <PackageReference Include="HotChocolate.Data" Version="11.0.9"/>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="12.0.0-rc.9"/>
+        <PackageReference Include="HotChocolate.Data" Version="12.0.0-rc.9"/>
         <PackageReference Include="Microsoft.Tye.Extensions.Configuration" Version="0.6.0-alpha.21070.5"/>
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9"/>
         <PackageReference Include="NEST" Version="7.11.1"/>
@@ -19,5 +19,4 @@
     <ItemGroup>
         <ProjectReference Include="..\Core\DocsDoc.Core.csproj"/>
     </ItemGroup>
-
 </Project>
