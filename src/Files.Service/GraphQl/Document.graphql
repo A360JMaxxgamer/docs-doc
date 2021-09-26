@@ -1,0 +1,11 @@
+mutation addDoc($contents: [String!]!) {
+    addDocuments(newDocuments: $contents) {
+        ...documentBase
+  }
+}
+
+fragment documentBase on Document {
+    id
+    creationDate
+    modifiedDate
+}
