@@ -36,10 +36,18 @@ namespace DocsDoc.Files.Service.Services
             Task.Run(HandleNewFiles);
         }
 
-        private async void OnFileCreated(object sender, FileSystemEventArgs e)
+        private async Task Analyze(string path)
         {
-            _logger.LogInformation($"New file found: {e.Name}");
-            await _analyzeChannel.Writer.WriteAsync(e.FullPath);
+            var fileInfo = new FileInfo(path);
+            _logger.LogInformation($"Start analysis of file: {fileInfo.Name}");
+            var document = await _imageAnalyzer.Analyze(fileInfo.FullName);
+            _logger.LogInformation($"Save document: {fileInfo.Name}");
+            var savedDocument = await _fileDocumentService.SaveDocument(document);
+            _logger.LogInformation($"Create file for document: {savedDocument.Id.Value}");
+            var outputName = Path.Combine(_storageDirectory.FullName, $"{savedDocument.Id}");
+            File.Copy(path, outputName);
+            _logger.LogInformation($"Delete input file: {fileInfo.Name}");
+            File.Delete(fileInfo.FullName);
         }
 
         private async Task HandleNewFiles()
@@ -56,18 +64,10 @@ namespace DocsDoc.Files.Service.Services
                 }
         }
 
-        private async Task Analyze(string path)
+        private async void OnFileCreated(object sender, FileSystemEventArgs e)
         {
-            var fileInfo = new FileInfo(path);
-            _logger.LogInformation($"Start analysis of file: {fileInfo.Name}");
-            var document = await _imageAnalyzer.Analyze(fileInfo.FullName);
-            _logger.LogInformation($"Save document: {fileInfo.Name}");
-            var savedDocument = await _fileDocumentService.SaveDocument(document);
-            _logger.LogInformation($"Create file for document: {savedDocument.Id.Value}");
-            var outputName = Path.Combine(_storageDirectory.FullName, $"{savedDocument.Id}");
-            File.Copy(path, outputName);
-            _logger.LogInformation($"Delete input file: {fileInfo.Name}");
-            File.Delete(fileInfo.FullName);
+            _logger.LogInformation($"New file found: {e.Name}");
+            await _analyzeChannel.Writer.WriteAsync(e.FullPath);
         }
     }
 }

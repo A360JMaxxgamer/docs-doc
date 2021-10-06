@@ -11,12 +11,13 @@ namespace DocsDoc.Files.Service.Services
 
         public FileDocumentService(IDocumentServiceClient documentServiceClient)
         {
-            _documentServiceClient = documentServiceClient ?? throw new ArgumentNullException(nameof(documentServiceClient));
+            _documentServiceClient =
+                documentServiceClient ?? throw new ArgumentNullException(nameof(documentServiceClient));
         }
 
         public async Task<IDocumentBase> SaveDocument(string documentContent)
         {
-            var operationResult = await _documentServiceClient.AddDoc.ExecuteAsync(new string[] {documentContent});
+            var operationResult = await _documentServiceClient.AddDoc.ExecuteAsync(new[] {documentContent});
             operationResult.EnsureNoErrors();
             return operationResult.Data.AddDocuments[0];
         }

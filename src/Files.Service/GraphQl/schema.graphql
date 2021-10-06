@@ -1,24 +1,24 @@
 ﻿schema {
-  query: Query
-  mutation: Mutation
+    query: Query
+    mutation: Mutation
 }
 
 type Query {
-  documents(query: String): [Document]
+    documents(query: String): [Document]
 }
 
 type Mutation {
-  "Adds a new document for each send content"
-  addDocuments("Each entry is a content of a single document" newDocuments: [String]): [Document]
-  "Deletes documents by their ids"
-  deleteDocuments(documentIds: [String]): Boolean!
+    "Adds a new document for each send content"
+    addDocuments("Each entry is a content of a single document" newDocuments: [String]): [Document]
+    "Deletes documents by their ids"
+    deleteDocuments(documentIds: [String]): Boolean!
 }
 
 type Document {
-  id: UUID
-  creationDate: DateTime
-  modifiedDate: DateTime
-  text: String
+    id: UUID
+    creationDate: DateTime
+    modifiedDate: DateTime
+    text: String
 }
 
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."

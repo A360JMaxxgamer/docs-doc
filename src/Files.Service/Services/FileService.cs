@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DocsDoc.Files.Grpc;
 using DocsDoc.Files.Service.Configuration;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,7 @@ namespace DocsDoc.Files.Service.Services
                         .ToArray();
                     file.Write(bytes);
                 }
+
                 file.Close();
                 return new UploadComplete
                 {
