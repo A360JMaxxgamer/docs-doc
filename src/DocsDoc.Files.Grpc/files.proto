@@ -1,4 +1,5 @@
 syntax = "proto3";
+option csharp_namespace = "DocsDoc.Files.Grpc";
 
 service UploadService {
 	rpc Upload(stream UploadRequest) returns (UploadComplete);

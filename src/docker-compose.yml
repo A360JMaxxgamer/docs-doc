@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 services:
 
@@ -10,20 +10,6 @@ services:
     ports:
       - "5101:5001"
       - "5100:5000"
-    environment:
-      - FolderConfig__WorkFolder=/app/files/work/
-      - FolderConfig__StorageFolder=/app/files/storage/
-    volumes:
-      - files-data:/app/files/
-
-  files-service:
-    build:
-      context: Files.Service
-      dockerfile: Dockerfile
-    container_name: files-service
-    ports:
-      - "5201:5001"
-      - "5200:5000"
 
   opensearch-node1:
     image: opensearchproject/opensearch:1.0.1
@@ -77,8 +63,25 @@ services:
       - "5601"
     environment:
       OPENSEARCH_HOSTS: '["https://opensearch-node1:9200","https://opensearch-node2:9200"]' # must be a string with no spaces when specified as an environment variable
+            
+  minio:
+    image: store/minio/minio:RELEASE.2020-12-29T23-29-29Z
+    volumes:
+      - minio_data1:/data
+    ports:
+      - "9000:9000"
+      - "9001:443"
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minioKey123
+    command: server --address ":443" /data
 
 volumes:
   opensearch-data1:
   opensearch-data2:
-  files-data:
+  data1-1:
+  minio_data1:
+    driver: local
+  data1-2:
+  data2-1:
+  data2-2:
