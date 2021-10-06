@@ -1,0 +1,29 @@
+﻿@page "/"
+@using Fluxor
+@using DocsDoc.Webapp.Store.UploadDocumentUseCase
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IDispatcher _dispatcher
+
+<MudPaper>
+    <InputFile id="fileInput112" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .png"/>
+    
+    <MudButton HtmlTag="label"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon="@Icons.Filled.CloudUpload"
+               for="fileInput112">
+        Upload your images
+    </MudButton>
+    
+    <UploadProgress />
+</MudPaper>
+
+@code {
+
+    private void UploadFiles(InputFileChangeEventArgs e)
+    {
+        var entries = e.GetMultipleFiles();
+        _dispatcher.Dispatch(new UploadFilesAction(entries));
+    }
+
+}

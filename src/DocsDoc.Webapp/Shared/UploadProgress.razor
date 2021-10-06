@@ -1,0 +1,8 @@
+﻿@using DocsDoc.Webapp.Store.UploadDocumentUseCase
+@using Fluxor
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<UploadDocumentState> _state
+
+<MudPopover Open="_state.Value.Uploading">
+    <div>Files queue for upload: @_state.Value.FilesToUpload</div>
+</MudPopover>

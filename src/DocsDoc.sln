@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.DocsAnalyzer.Test",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsDoc.Documents.Service", "Document.Service\DocsDoc.Documents.Service.csproj", "{5E0927A8-2698-4DBF-A0B7-AB0483FD2979}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsDoc.Files.Service", "Files.Service\DocsDoc.Files.Service.csproj", "{FE7019BF-BA53-4494-99A5-0EA30D6AE179}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{97343838-0407-4343-BDDE-A0A30B74603B}"
 ProjectSection(SolutionItems) = preProject
 	docker-compose.yml = docker-compose.yml
@@ -78,18 +76,6 @@ Global
 		{5E0927A8-2698-4DBF-A0B7-AB0483FD2979}.Release|x64.Build.0 = Release|Any CPU
 		{5E0927A8-2698-4DBF-A0B7-AB0483FD2979}.Release|x86.ActiveCfg = Release|Any CPU
 		{5E0927A8-2698-4DBF-A0B7-AB0483FD2979}.Release|x86.Build.0 = Release|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Debug|x64.Build.0 = Debug|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Debug|x86.Build.0 = Debug|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Release|x64.ActiveCfg = Release|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Release|x64.Build.0 = Release|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Release|x86.ActiveCfg = Release|Any CPU
-		{FE7019BF-BA53-4494-99A5-0EA30D6AE179}.Release|x86.Build.0 = Release|Any CPU
 		{87981554-B203-467C-8713-6D030DA4D0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87981554-B203-467C-8713-6D030DA4D0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87981554-B203-467C-8713-6D030DA4D0BA}.Debug|x64.ActiveCfg = Debug|Any CPU
