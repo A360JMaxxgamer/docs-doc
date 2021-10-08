@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using DocsDoc.Core;
-using DocsDoc.Documents.Service.Services;
-using HotChocolate;
+using DocsDoc.Documents.Service.GraphQl.Payloads;
+using Nest;
 
 namespace DocsDoc.Documents.Service.GraphQl
 {
@@ -12,32 +11,40 @@ namespace DocsDoc.Documents.Service.GraphQl
         /// <summary>
         /// Adds a new document for each send content
         /// </summary>
-        /// <param name="documentService"></param>
-        /// <param name="newDocuments">Each entry is a content of a single document</param>
+        /// <param name="elasticClient"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public IQueryable<Document> AddDocuments([Service] IDocumentService documentService,
-            IEnumerable<string> newDocuments)
+        public IQueryable<Document> AddDocuments(IElasticClient elasticClient, AddDocumentsInput input)
         {
-            return documentService.AddDocuments(newDocuments);
+            var response = elasticClient.Bulk(desc => desc.CreateMany(input
+                .Documents
+                .Select(doc => new Document
+                {
+                    Id = Guid.NewGuid(),
+                    CreationDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow,
+                    Base64File = doc.Base64File,
+                    OriginalFileName = doc.OriginalFileName
+                })));
+            return response
+                .Items
+                .AsQueryable()
+                .Select(entry => entry.GetResponse<Document>().Source);
         }
 
         /// <summary>
-        /// Deletes documents by their ids
+        /// Updates the text of the specific document
         /// </summary>
-        /// <param name="documentService"></param>
-        /// <param name="documentIds"></param>
+        /// <param name="elasticClient"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public bool DeleteDocuments([Service] IDocumentService documentService, IEnumerable<string> documentIds)
+        public Document UpdateText(IElasticClient elasticClient, UpdateTextInput input)
         {
-            try
+            var updateResponse = elasticClient.Update<Document, Document>(input.DocumentId, u => u.Doc(new Document
             {
-                documentService.DeleteDocuments(documentIds);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+                Text = input.Text
+            }));
+            return updateResponse.Get.Source;
         }
     }
 }

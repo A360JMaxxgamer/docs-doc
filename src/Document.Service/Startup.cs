@@ -1,6 +1,5 @@
 using System;
 using DocsDoc.Documents.Service.GraphQl;
-using DocsDoc.Documents.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,15 +18,24 @@ namespace DocsDoc.Documents.Service
             _configuration = configuration;
         }
 
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
+            app.UseWebSockets();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IDocumentService, ElasticDocumentService>();
-
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()
                 .AddFiltering()
-                .AddSorting();
+                .AddSorting()
+                .ConfigureResolverCompiler(r => { r.AddService<IElasticClient>(); });
 
             services
                 .AddTransient<IElasticClient>(_ =>
@@ -37,16 +45,6 @@ namespace DocsDoc.Documents.Service
                         .DefaultIndex("docs");
                     return new ElasticClient(settings);
                 });
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
-            app.UseWebSockets();
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
         }
     }
 }

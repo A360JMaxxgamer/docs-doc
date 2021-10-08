@@ -24,5 +24,15 @@ namespace DocsDoc.Core
         /// The content of the document
         /// </summary>
         public string Text { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// The original filename with type e.g. test.png
+        /// </summary>
+        public string OriginalFileName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Base 64 encoded content of the file
+        /// </summary>
+        public string Base64File { get; set; } = string.Empty;
     }
 }
