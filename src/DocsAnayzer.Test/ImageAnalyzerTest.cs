@@ -22,15 +22,10 @@ namespace DocsDoc.DocsAnalyzer.Test
         [Fact]
         public async Task Find_any_text()
         {
-            var content = await _analyzer.Analyze(_exampleLetter.FullName);
+            await using var fileStream = File.OpenRead(_exampleLetter.FullName);
+            var content = await _analyzer.Analyze(fileStream);
             
             Assert.NotNull(content);
-        }
-
-        [Fact]
-        public async Task Throws_FileNotFound_on_invalid_file_path()
-        {
-            await Assert.ThrowsAsync<FileNotFoundException>(async () => await _analyzer.Analyze("error"));
         }
 
         [Fact]

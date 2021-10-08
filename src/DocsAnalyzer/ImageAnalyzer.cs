@@ -23,15 +23,16 @@ namespace DocsDoc.DocsAnalyzer
             _tesseractEngine.Dispose();
         }
 
-        public Task<string> Analyze(string imagePath)
+        public async Task<string> Analyze(Stream fileStream)
         {
-            if (!File.Exists(imagePath)) throw new FileNotFoundException($"Image {imagePath} cannot be found.");
+            await using var memoryStream = new MemoryStream();
+            await fileStream.CopyToAsync(memoryStream);
 
-            using var img = Pix.LoadFromFile(imagePath);
+            using var img = Pix.LoadFromMemory(memoryStream.ToArray());
             using var page = _tesseractEngine.Process(img);
             var text = page.GetText();
-            
-            return Task.FromResult(text);
+
+            return text;
         }
     }
 }
