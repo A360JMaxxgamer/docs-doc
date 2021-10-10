@@ -14,7 +14,7 @@ namespace DocsDoc.Documents.Service.GraphQl
         /// <param name="elasticClient"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        public IQueryable<Document> AddDocuments(IElasticClient elasticClient, AddDocumentsInput input)
+        public AddDocumentsPayload AddDocuments(IElasticClient elasticClient, AddDocumentsInput input)
         {
             var response = elasticClient.Bulk(desc => desc.CreateMany(input
                 .Documents
@@ -26,10 +26,10 @@ namespace DocsDoc.Documents.Service.GraphQl
                     Base64File = doc.Base64File,
                     OriginalFileName = doc.OriginalFileName
                 })));
-            return response
+            return new AddDocumentsPayload(response
                 .Items
-                .AsQueryable()
-                .Select(entry => entry.GetResponse<Document>().Source);
+                .Select(entry => entry.GetResponse<Document>().Source)
+                .ToList());
         }
 
         /// <summary>
@@ -38,13 +38,13 @@ namespace DocsDoc.Documents.Service.GraphQl
         /// <param name="elasticClient"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        public Document UpdateText(IElasticClient elasticClient, UpdateTextInput input)
+        public UpdateTextPayload UpdateText(IElasticClient elasticClient, UpdateTextInput input)
         {
             var updateResponse = elasticClient.Update<Document, Document>(input.DocumentId, u => u.Doc(new Document
             {
                 Text = input.Text
             }));
-            return updateResponse.Get.Source;
+            return new UpdateTextPayload(updateResponse.Get.Source);
         }
     }
 }

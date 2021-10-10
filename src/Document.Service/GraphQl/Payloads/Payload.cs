@@ -1,11 +1,14 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace DocsDoc.Documents.Service.GraphQl.Payloads
 {
-    public class Payload<T>
+    public abstract class Payload
     {
-        public Error[] Errors { get; set; } = Array.Empty<Error>();
+        public IReadOnlyList<UserError>? Errors { get; }
 
-        public T? Content { get; set; }
+        protected Payload(IReadOnlyList<UserError>? errors = null)
+        {
+            Errors = errors;
+        }
     }
 }

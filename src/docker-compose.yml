@@ -10,6 +10,13 @@ services:
     ports:
       - "5101:5001"
       - "5100:5000"
+  
+  kafka:
+     image: bitnami/kafka:latest
+     container_name: kafka
+     ports:
+       - '9092:9092'
+       - '9093:9093'
 
   opensearch-node1:
     image: opensearchproject/opensearch:1.0.1

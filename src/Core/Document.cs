@@ -2,7 +2,7 @@ using System;
 
 namespace DocsDoc.Core
 {
-    public class Document
+    public record Document
     {
         /// <summary>
         /// The identifier of the document

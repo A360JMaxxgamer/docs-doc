@@ -33,8 +33,6 @@ namespace DocsDoc.Documents.Service
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()
-                .AddFiltering()
-                .AddSorting()
                 .ConfigureResolverCompiler(r => { r.AddService<IElasticClient>(); });
 
             services
